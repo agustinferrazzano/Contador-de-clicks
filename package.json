@@ -1,0 +1,12 @@
+{
+  "name": "contador-clicks",
+  "version": "1.0.0",
+  "description": "Contador de clicks con persistencia en localStorage",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  },
+  "type": "module"
+}
