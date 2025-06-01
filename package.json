@@ -8,7 +8,7 @@
     "start-prod": "node aoo.js",
     "test": "jest",
     "eslint": "eslint './**/*.{js,jsx}'",
-    "build": "webpack --mode production",
+    "build": "webpack --mode production"
   },
   "devDependencies": {
     "jest": "^29.0.0"
