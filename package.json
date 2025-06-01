@@ -2,8 +2,13 @@
   "name": "contador-clicks",
   "version": "1.0.0",
   "description": "Contador de clicks con persistencia en localStorage",
+  "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "start": "webpack-dev-server --open --mode development",
+    "start-prod": "node aoo.js",
+    "test": "jest",
+    "eslint": "eslint './**/*.{js,jsx}'",
+    "build": "webpack --mode production",
   },
   "devDependencies": {
     "jest": "^29.0.0"
