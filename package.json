@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "cypress:run": "cypress run",
-    "lint": "eslint src"
+    "lint": "oxlint"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",

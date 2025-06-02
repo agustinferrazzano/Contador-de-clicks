@@ -14,7 +14,10 @@ jobs:
         node-version: 18
     - name: Instalar dependencias
       run: npm install
-    - name: Lint
+    - name: Instalar Oxlint
+      run: npm install --save-dev oxlint
+    - name: Ejecutar Oxlint
       run: npm run lint
+
     - name: Build
       run: npm run build
