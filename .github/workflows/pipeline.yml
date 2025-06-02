@@ -18,10 +18,3 @@ jobs:
       run: npm run lint
     - name: Build
       run: npm run build
-    - name: Deploy
-      run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
-    - name: Test de Cypress en modo headless #sin interfaz grafica
-      run: |
-        npx wait-on https://continuous-integration-rbne.onrender.com  
-        npm run cypress:run
-      
