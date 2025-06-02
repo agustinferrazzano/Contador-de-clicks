@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Instalar ESLint
-        run: npm install eslint@8 --save-dev
+        run: npm install eslint --save-dev
 
       - name: Ejecutar ESLint
         run: npm run eslint
