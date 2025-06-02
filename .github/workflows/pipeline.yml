@@ -2,26 +2,26 @@ name: Deployment Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code  
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-      - name: Instalar ESLint
-        run: npm install eslint --save-dev
-
-      - name: Ejecutar ESLint
-        run: npm run eslint
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with: 
+        node-version: 18
+    - name: Instalar dependencias
+      run: npm install
+    - name: Lint
+      run: npm run lint
+    - name: Build
+      run: npm run build
+    - name: Deploy
+      run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+    - name: Test de Cypress en modo headless #sin interfaz grafica
+      run: |
+        npx wait-on https://continuous-integration-rbne.onrender.com  
+        npm run cypress:run
+      
