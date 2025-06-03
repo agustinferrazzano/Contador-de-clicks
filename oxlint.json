@@ -1,0 +1,7 @@
+{
+  "files": ["./src", "./tests"],
+  "rules": {
+    "no-unused-vars": "error",
+    "no-empty": "warn"
+  }
+}
