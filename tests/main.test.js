@@ -14,9 +14,9 @@ describe('Contador de Clicks', () => {
     );
     localStorage.clear();
     jest.resetModules();
-    
-    // Importar el archivo main.js después de la configuración del DOM
-    import('../main.js');  // Usar `import` en vez de `require` (ya que Jest soporta importación dinámica)
+
+    // Usar require() para importar main.js (funciona mejor con Jest)
+    require('../main.js');
   });
 
   it('debe mostrar contador inicial en 0 si no hay nada en localStorage', () => {

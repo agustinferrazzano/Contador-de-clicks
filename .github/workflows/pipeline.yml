@@ -22,4 +22,6 @@ jobs:
       run: npm run build
     - name: Test
       run: npm test
-      
+    - name: Verificar la instalación de dependencias
+      run: npm ls
+
