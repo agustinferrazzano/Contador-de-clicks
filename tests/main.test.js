@@ -16,7 +16,7 @@ describe('Contador de Clicks', () => {
     jest.resetModules();
 
     // Usar require() para importar main.js (funciona mejor con Jest)
-    require('../main.js');
+    require('../src/main.js');
   });
 
   it('debe mostrar contador inicial en 0 si no hay nada en localStorage', () => {
