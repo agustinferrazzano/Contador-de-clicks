@@ -10,7 +10,6 @@
     "build": "vite build",
     "preview": "vite preview",
     "cypress:run": "cypress run",
-    "test": "jest",
     "lint": "oxlint"
   },
   "devDependencies": {
