@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs'); // Usar `require` en vez de `import`
+const path = require('path'); // Usar `require` en vez de `import`
 
 describe('Contador de Clicks', () => {
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('Contador de Clicks', () => {
     localStorage.clear();
     jest.resetModules();
 
-    // Usar require() para importar main.js (funciona mejor con Jest)
+    // Usar `require()` para importar main.js (funciona mejor con Jest)
     require('../src/main.js');
   });
 
