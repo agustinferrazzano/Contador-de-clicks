@@ -4,6 +4,8 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
+    // Configuración de los tests: puedes elegir solo ciertos tests o directorios
+    specPattern: 'cypress/integration/**/*.app.js',
     // Configuración de la URL base para los tests E2E
     baseUrl: 'http://localhost:5173',  // Asegúrate de que el puerto coincida con el de tu servidor
 
@@ -29,7 +31,6 @@ export default defineConfig({
     screenshotsFolder: 'cypress/screenshots',
     videosFolder: 'cypress/videos',
 
-    // Configuración de los tests: puedes elegir solo ciertos tests o directorios
-    specPattern: 'cypress/integration/**/*.spec.js',
+
   },
 });
