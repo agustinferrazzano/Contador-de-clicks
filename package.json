@@ -6,12 +6,16 @@
   "description": "Contador de clicks con persistencia en localStorage",
   "main": "src/index.js",
   "scripts": {
+    "start": "web-dev-server  --open --mode development",
+    "start-test": "NODE_ENV=test node app.js",
+    "start-prod": "node app.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "cypress:run": "cypress run",
     "test": "jest",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "test:e2e": "npx cypress run"
   },
   "devDependencies": {
     "cypress": "^14.4.0",

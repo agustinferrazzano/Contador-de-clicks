@@ -24,4 +24,9 @@ jobs:
       run: npm test
     - name: Verificar la instalación de dependencias
       run: npm ls
-
+    - name: E2E Tests
+      uses: cypress-io/github-action@v6
+      with:
+        command: npm run test:e2e
+        start: npm run start-test
+        wait-on: 'http://localhost:5000'
