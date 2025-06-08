@@ -2,31 +2,50 @@ name: Deployment Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with: 
-        node-version: 18
-    - name: Instalar dependencias
-      run: npm install --no audit --no-fund --no optional
-    - name: Instalar Oxlint
-      run: npm install --save-dev oxlint
-    - name: Ejecutar Oxlint
-      run: npm run lint
-    - name: Build
-      run: npm run build
-    - name: Test
-      run: npm test
-    - name: Verificar la instalación de dependencias
-      run: npm ls
-    - name: E2E Tests
-      uses: cypress-io/github-action@v6
-      with:
-        command: npm run test:e2e
-        start: npm run start-test
-        wait-on: 'http://localhost:5173'
+      # 1. Checkout del código
+      - uses: actions/checkout@v4
+
+      # 2. Configurar Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # 3. Instalar dependencias
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund --no-optional
+
+      # 4. Instalar Oxlint
+      - name: Instalar Oxlint
+        run: npm install --save-dev oxlint
+
+      # 5. Ejecutar Oxlint
+      - name: Ejecutar Oxlint
+        run: npm run lint
+
+      # 6. Ejecutar el build
+      - name: Build
+        run: npm run build
+
+      # 7. Ejecutar los tests unitarios
+      - name: Test
+        run: npm test
+
+      # 8. Verificar instalación de dependencias
+      - name: Verificar la instalación de dependencias
+        run: npm ls
+
+      # 9. Ejecutar Cypress E2E Tests
+      - name: Ejecutar E2E Tests con Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          command: npm run test:e2e
+          start: npm run start-test  # Asegúrate de que este comando inicie correctamente el servidor
+          wait-on: 'http://localhost:5173'  # Esperar hasta que el servidor esté disponible
+        env:
+          CYPRESS_BASE_URL: http://localhost:5173  # Configurar la base URL de Cypress si es necesario
