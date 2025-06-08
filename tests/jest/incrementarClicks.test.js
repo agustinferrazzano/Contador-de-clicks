@@ -1,4 +1,4 @@
-import { incrementarClick, configurarBotonClick } from "../../src/main.js";
+const { incrementarClick, configurarBotonClick } = require("../../src/main.js");
 
 describe('Pruebas para la función incrementarClick', () => {
   let contador;
