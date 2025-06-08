@@ -25,7 +25,11 @@
     "oxlint": "0.18.0"
   },
 
-  "jest": {
-    "testEnvironment": "jest-environment-jsdom"
+ "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "testEnvironment": "jest-environment-jsdom",
+    "moduleFileExtensions": ["js", "jsx"]
   }
 }
