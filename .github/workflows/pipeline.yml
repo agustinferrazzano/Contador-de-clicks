@@ -69,7 +69,7 @@ jobs:
     - name: Instalar dependencias
       run: npm ci
     - name: Desplegar a Render
-      run: npm run start:prod
+      run: npm render
 
          
   E2E_Test:
