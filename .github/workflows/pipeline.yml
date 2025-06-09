@@ -13,10 +13,10 @@ jobs:
       with: 
         node-version: 18
     - name: Instalar dependencias
-      run: npm install
+      run: npm ci
 
     - name: Instalar Oxlint
-      run: npm install --save-dev oxlint
+      run: npm ci --save-dev oxlint
 
     - name: Ejecutar Oxlint
       run: npm run lint
@@ -30,7 +30,7 @@ jobs:
       with: 
         node-version: 18
     - name: Instalar dependencias
-      run: npm install
+      run: npm ci
     - name: Build
       run: npm run build
     - uses: actions/upload-artifact@v4
@@ -49,7 +49,7 @@ jobs:
       with: 
         node-version: 18
     - name: Instalar dependencias
-      run: npm install
+      run: npm ci
     - uses: actions/download-artifact@v4
       with:
         name: dist
@@ -68,6 +68,6 @@ jobs:
       with: 
         node-version: 18
     - name: Instalar dependencias
-      run: npm install
+      run: npm ci
     - name: Test de Cypress en modo headless #sin interfaz grafica, npx wait-on https://continuous-integration-rbne.onrender.com 
       run: npm run cypress:run
