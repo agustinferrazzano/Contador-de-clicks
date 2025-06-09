@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "cypress:run": "cypress run",
     "test": "jest",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "start-prod": "node server.js"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.27.2",
