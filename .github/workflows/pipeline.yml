@@ -70,7 +70,13 @@ jobs:
       run: npm ci
     - name: Desplegar a Render
       run: curl -X POST ${{secrets.DEPLOY_RENDER}}
-
+    - name: Notificar a Slack
+      uses: slackapi/slack-github-action@v2.1.0
+      with:
+        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        webhook-type: incoming-webhook
+        payload: |
+          text: "El despliegue a Render se ha completado exitosamente."
          
   E2E_Test:
     needs: [Deploy]
