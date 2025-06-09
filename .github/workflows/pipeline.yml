@@ -69,7 +69,7 @@ jobs:
     - name: Instalar dependencias
       run: npm ci
     - name: Desplegar a Render
-      run: npm render
+      run: curl -X POST ${{secrets.DEPLOY_RENDER}}
 
          
   E2E_Test:

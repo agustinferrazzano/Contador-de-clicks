@@ -12,8 +12,7 @@
     "preview": "vite preview",
     "cypress:run": "cypress run",
     "test": "jest",
-    "lint": "oxlint",
-    "render": "npm run start-prod"
+    "lint": "oxlint"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.27.2",
