@@ -70,5 +70,4 @@ jobs:
     - name: Instalar dependencias
       run: npm install
     - name: Test de Cypress en modo headless #sin interfaz grafica, npx wait-on https://continuous-integration-rbne.onrender.com 
-      run: 
-        npm run cypress:run
+      run: npm run cypress:run
