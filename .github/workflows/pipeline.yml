@@ -75,16 +75,22 @@ jobs:
     - name: Desplegar a Render
       run: curl -X POST ${{secrets.DEPLOY_RENDER}}
     #Notificar a Slack que el despliegue se ha completado exitosamente
-    - name: Notificar a Slack
-      uses: slackapi/slack-github-action@v2.1.0
+    - name: Notificar Slack - Éxito
       if: success()
-      with:
-        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-        webhook-type: incoming-webhook
-        payload: |
-          text: "El despliegue a render fue exitoso en el repo: '"${{ github.repository }}"'"
-  
-  
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"El despliegue a Render finalizado con éxito en repo: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
+
+    # Paso para enviar notificación a Slack en caso de fallo
+    - name: Notificar Slack - Fallo
+      if: failure()
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"El despliegue a Render falló en repo: '"${{ github.repository }}"' - Revisa los logs!"}' $SLACK_WEBHOOK_URL
+
+
   # E2E_Test:
     # Este job depende de Deploy, por lo que se ejecutará después de que la aplicación haya sido desplegada
     # Ejecuta los tests E2E y verifica que la aplicación esté funcionando correctamente en el entorno de producción
