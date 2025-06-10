@@ -82,7 +82,7 @@ jobs:
         webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
         webhook-type: incoming-webhook
         payload: |
-          text: "El despliegue a Render de "${{ github.repository }}" se ha completado exitosamente."
+          text: "El despliegue a render fue exitoso en el repo: '"${{ github.repository }}"'"
   
   
   # E2E_Test:
