@@ -3,8 +3,26 @@ name: Deployment Pipeline
 on:
   push:
     branches: [ "main" ]
-
+#Vamos a dividir el pipeline en varios jobs para optimizar el proceso de CI/CD
 jobs:
+  # Este job se encargará de construir el proyecto, instalar las dependencias y generar los archivos necesarios para el despliegue
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with: 
+        node-version: 18
+    - name: Instalar dependencias
+      run: npm ci
+    - name: Build
+      run: npm run build
+    - uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist
+
+  # Este job se encargará de ejecutar Oxlint, que es una herramienta de linting para verificar la calidad del código
   Oxlint:
     runs-on: ubuntu-latest
     steps:
@@ -22,21 +40,6 @@ jobs:
       run: npm run lint
 
 
-  Build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with: 
-        node-version: 18
-    - name: Instalar dependencias
-      run: npm ci
-    - name: Build
-      run: npm run build
-    - uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: dist
 
   Test:
     # Este job depende de Oxlint y Build, por lo que se ejecutará después de ellos
@@ -58,7 +61,8 @@ jobs:
       run: npm run test
 
   Deploy:
-    # Este job depende de Build, por lo que se ejecutará después de él
+    # Este job depende de Test, por lo que se ejecutará después de que los tests unitarios hayan pasado
+    # Despliega la aplicación a Render
     needs: [Test]
     runs-on: ubuntu-latest
     steps:
@@ -70,14 +74,20 @@ jobs:
       run: npm ci
     - name: Desplegar a Render
       run: curl -X POST ${{secrets.DEPLOY_RENDER}}
+    #Notificar a Slack que el despliegue se ha completado exitosamente
     - name: Notificar a Slack
       uses: slackapi/slack-github-action@v2.1.0
+      if: success()
       with:
         webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
         webhook-type: incoming-webhook
         payload: |
-          text: "El despliegue a Render se ha completado exitosamente."
-         
+          text: "El despliegue a Render de "${{ github.repository }}" se ha completado exitosamente."
+  
+  
+  # E2E_Test:
+    # Este job depende de Deploy, por lo que se ejecutará después de que la aplicación haya sido desplegada
+    # Ejecuta los tests E2E y verifica que la aplicación esté funcionando correctamente en el entorno de producción
   E2E_Test:
     needs: [Deploy]
     runs-on: ubuntu-latest
@@ -88,5 +98,5 @@ jobs:
         node-version: 18
     - name: Instalar dependencias
       run: npm ci
-    - name: Test de Cypress en modo headless #sin interfaz grafica, npx wait-on https://continuous-integration-rbne.onrender.com 
+    - name: Test de Cypress en modo headless #sin interfaz grafica, npx wait-on https://contador-de-clicks.onrender.com
       run: npm run cypress:run
