@@ -138,7 +138,7 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
-        curl -X POST -H 'Content-type: application/json' --data '{"text":"Test E2E con Cypress finalizado con éxito en el repo: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Test E2E con Cypress finalizado con éxito en repo: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
 
     # Paso para enviar notificación a Slack en caso de fallo
     - name: Notificar Slack - Fallo del test E2E
