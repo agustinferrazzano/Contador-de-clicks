@@ -1,6 +1,6 @@
 describe('Contador de Clicks', () => {
   beforeEach(() => { //antes de cada it, visita la pagina
-    cy.visit(' https://contador-de-clicks.onrender.com');
+    cy.visit('https://contador-de-clicks.onrender.com');
   });
 
   it('debe incrementar el contador al hacer click', () => { 
