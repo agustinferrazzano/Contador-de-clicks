@@ -1,7 +1,7 @@
 let clicks = 0;
 
 export function incrementarClick() {
-  clicks++;
+  clicks--;
   return clicks;  
 }
 
