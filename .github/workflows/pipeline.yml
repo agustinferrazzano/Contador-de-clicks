@@ -74,8 +74,24 @@ jobs:
         path: dist
     - name: Test unitario
       run: npm run test
+    - name: Notificar Slack - Éxito del Test unitario
+      if: success()
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Test unitario exitoso de: '"${{ github.repository }}"'"}'  $SLACK_WEBHOOK_URL
+    # Paso para enviar notificación a Slack en caso de fallo
+    - name: Notificar Slack - Fallo del Test unitario
+      if: failure()
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Falló el Test unitario de: '"${{ github.repository }}"' - Revisa tu codigo!"}' $SLACK_WEBHOOK_URL
 
-      
+
+
+
+
   Deploy:
     # Este job depende de Test, por lo que se ejecutará después de que los tests unitarios hayan pasado
     # Despliega la aplicación a Render
@@ -96,7 +112,7 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
-        curl -X POST -H 'Content-type: application/json' --data '{"text":"El despliegue a Render finalizado con éxito en repo: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"El despliegue a Render finalizado con éxito en repo: '"${{ github.repository }}"'- Puede verlo en: https://contador-de-clicks.onrender.com"}'  $SLACK_WEBHOOK_URL
 
     # Paso para enviar notificación a Slack en caso de fallo
     - name: Notificar Slack - Fallo del deploy
