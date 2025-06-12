@@ -44,9 +44,7 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
         curl -X POST -H 'Content-type: application/json' --data '{"text":"Oxlint verificó la calidad del codigo de: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
-
-    # Paso para enviar notificación a Slack en caso de fallo
-    - name: Notificar Slack - Fallo del test E2E
+    - name: Notificar Slack - Fallo del Oxlint
       if: failure()
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -87,9 +85,6 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
         curl -X POST -H 'Content-type: application/json' --data '{"text":"Falló el Test unitario de: '"${{ github.repository }}"' - Revisa tu codigo!"}' $SLACK_WEBHOOK_URL
-
-
-
 
 
   Deploy:

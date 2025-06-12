@@ -1,6 +1,6 @@
 let clicks = 0;
 
-expor function incrementarClick() {
+export function incrementarClick() {
   clicks++;
   return clicks;  
 }
