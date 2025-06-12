@@ -106,3 +106,17 @@ jobs:
       run: npm ci
     - name: Test de Cypress en modo headless #sin interfaz grafica, npx wait-on https://contador-de-clicks.onrender.com
       run: npm run cypress:run
+    - name: Notificar Slack - Éxito del test E2E
+      if: success()
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Test E2E con Cypress finalizado con éxito en repo: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
+
+    # Paso para enviar notificación a Slack en caso de fallo
+    - name: Notificar Slack - Fallo del test E2E
+      if: failure()
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Fallo en el test E2E con Cypress en el repo: '"${{ github.repository }}"' revisa tu codigo "}' $SLACK_WEBHOOK_URL
