@@ -16,7 +16,7 @@ describe('Pruebas para la función incrementarClick', () => {
 
     configurarBotonClick(boton,contador);
   }); 
-
+// Este test verifica que el contador se incremente correctamente al hacer clic en el botón
   test('Debería incrementar el contador correctamente', () => {
     expect(incrementarClick()).toBe(1);  
     expect(incrementarClick()).toBe(2); 
