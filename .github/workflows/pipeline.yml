@@ -35,9 +35,24 @@ jobs:
 
     - name: Instalar Oxlint
       run: npm ci --save-dev oxlint
-
+# Ejecuta Oxlint para verificar la calidad del código
     - name: Ejecutar Oxlint
       run: npm run lint
+    - name: Notificar Slack - Éxito del Oxlint
+      if: success()
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Oxlint verificó la calidad del codigo de: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
+
+    # Paso para enviar notificación a Slack en caso de fallo
+    - name: Notificar Slack - Fallo del test E2E
+      if: failure()
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"Oxlint encontró errores de codigo en: '"${{ github.repository }}"' revisa tu codigo "}' $SLACK_WEBHOOK_URL
+
 
 
 
@@ -60,6 +75,7 @@ jobs:
     - name: Test unitario
       run: npm run test
 
+      
   Deploy:
     # Este job depende de Test, por lo que se ejecutará después de que los tests unitarios hayan pasado
     # Despliega la aplicación a Render
@@ -75,7 +91,7 @@ jobs:
     - name: Desplegar a Render
       run: curl -X POST ${{secrets.DEPLOY_RENDER}}
     #Notificar a Slack que el despliegue se ha completado exitosamente
-    - name: Notificar Slack - Éxito
+    - name: Notificar Slack - Éxito del deploy
       if: success()
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -83,7 +99,7 @@ jobs:
         curl -X POST -H 'Content-type: application/json' --data '{"text":"El despliegue a Render finalizado con éxito en repo: '"${{ github.repository }}"'"}' $SLACK_WEBHOOK_URL
 
     # Paso para enviar notificación a Slack en caso de fallo
-    - name: Notificar Slack - Fallo
+    - name: Notificar Slack - Fallo del deploy
       if: failure()
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
